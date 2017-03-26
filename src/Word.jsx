@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import WordDetail from './WordDetail';
-import './Word.css';
-import './WordDetail.css';
+
 
 class Word extends Component {
-
   constructor(props) {
     super(props);
     this.state = {
-      detail: false,
+      clicked: false,
       x: 0,
       y: 0,
     };
@@ -17,18 +15,19 @@ class Word extends Component {
   }
 
   handleClick(e) {
-    let x = e.clientX + 15;
+    let x = e.clientX;
     let y = e.clientY;
-    this.setState({x: x, y: y, detail: !this.state.detail});
-    console.log(this.state);
+    console.log("x " + x + " y " + y)
+    this.setState({x: x, y: y, clicked: !this.state.clicked});
   }
 
   render() {
-   if (this.state.detail) {
+   if (this.state.clicked) {
+     let definitions = ["This is one", "this is another", "niceeeeeee"];
     return (
       <span onClick={this.handleClick}>
           {this.props.children}
-          <WordDetail x={this.state.x} y={this.state.y} word={this.props.children} onClick={this.handleClick} />
+          <WordDetail x={this.state.x} y={this.state.y} pinyin={"ai4guo2"}keyword={this.props.children} onClick={this.handleClick} definitions={definitions}/>
       </span>
     )
    }
