@@ -2,7 +2,15 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 
+import { Provider } from 'react-redux';
+import { createStore } from 'redux'
+import { selectWord } from './actions/words'
+
+let store = createStore(selectWord);
+
 ReactDOM.render(
-  <App />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );

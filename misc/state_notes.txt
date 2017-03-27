@@ -1,0 +1,7 @@
+State
+-----
+
+Article:
+  Words:
+    Difficulty := Hard | Easy | Known
+    Selected := True | False
