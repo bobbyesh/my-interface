@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import Word from './Word';
 
 class Paragraph extends Component {
   render() {

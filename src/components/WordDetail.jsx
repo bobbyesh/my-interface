@@ -1,29 +1,35 @@
-import React, { Component } from 'react';
-import Definitions from './Definitions';
+import React, { Component } from 'react'
+import Definitions from './Definitions'
+import { connect } from 'react-redux'
+import { selectWord } from '../actions/words'
 
 class WordDetail extends Component {
+
+  constructor(props) {
+    super(props)
+    this.handleClick = this.handleClick.bind(this);
+  }
+
+  handleClick(e) {
+    this.props.onWordDetailClick(e);
+  }
+
   render() {
+    var left = this.props.x + 20;
+    var top = this.props.y + 20;
 
-    var leftOffset;
-    var topOffset;
-    let widthDiff = window.innerWidth - this.props.x;
-    let heightDiff = window.innerHeight - this.props.y;
-    
-    if (widthDiff < 300) {
-      leftOffset = 500;
-    } else {
-      leftOffset = 150;
+    if(left > window.innerWidth - 150) {
+      left = window.innerWidth - 300
     }
 
-    if (heightDiff < 300) {
-      topOffset = 325;
-    } else {
-      topOffset = 50;
+    if(top > window.innerHeight - 150) {
+      top = window.innerHeight - 300
     }
+
 
     let wordDetailStyle = {
-      left: this.props.x - leftOffset,
-      top: this.props.y - topOffset,
+      left: left,
+      top: top,
       position: "absolute",
       display: "inline",
       backgroundColor: "white",
@@ -48,10 +54,9 @@ class WordDetail extends Component {
       marginRight: "2px",
     }
 
-
     return (
-      <div style={wordDetailStyle} id="selected" className="word-detail rounded">
-          <h3 style={alignCenter}>{this.props.keyword}</h3>
+      <div style={wordDetailStyle} id="selected" className="word-detail rounded" onClick={this.handleClick}>
+          <h3 style={alignCenter}>{this.props.word}</h3>
           <p style={alignCenter} className="pinyin"><small className="text-muted">{this.props.pinyin}</small></p>
           <Definitions definitions={this.props.definitions}/>
           <div style={ranksStyle} className="rank-buttons text-center">
@@ -65,4 +70,10 @@ class WordDetail extends Component {
   }
 }
 
-export default WordDetail;
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onWordDetailClick: (e) => dispatch(selectWord(-1, e))
+  }
+}
+
+export default connect(null, mapDispatchToProps)(WordDetail)
