@@ -18,11 +18,11 @@ class WordDetail extends Component {
     var left = this.props.x + 20;
     var top = this.props.y + 20;
 
-    if(left > window.innerWidth - 150) {
+    if(left > window.innerWidth - 200) {
       left = window.innerWidth - 300
     }
 
-    if(top > window.innerHeight - 150) {
+    if(top > window.innerHeight - 200) {
       top = window.innerHeight - 300
     }
 
