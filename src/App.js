@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
+import { selectWord } from './reducers/words'
+import { Provider } from 'react-redux'
+import { createStore } from 'redux'
 import Navbar from './components/Navbar'
 import Article from './components/Article'
 import Container from './components/Container'
 import MyData from './segments.json'
 import WordList from './components/WordList'
-import { selectWord } from './reducers/words'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
+
 
 
 function getData() {

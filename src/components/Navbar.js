@@ -1,6 +1,24 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
+import { Button, Modal} from 'react-bootstrap'
+import ImportForm from './ImportForm'
 
 class Navbar extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = {show: false}
+    this.showModal = this.showModal.bind(this)
+    this.hideModal = this.hideModal.bind(this)
+  }
+
+  showModal() {
+    this.setState({show: true})
+  }
+
+  hideModal() {
+    this.setState({show: false})
+  }
+
   render() {
     return (
       <div className="container">
@@ -10,13 +28,33 @@ class Navbar extends Component {
               <div className="navbar-header">
                 <a href="#" className="navbar-brand">Modua</a>
               </div>
-
-              <div className="collapse navbar-collapse">
+              <div>
                 <ul className="nav navbar-nav navbar-right">
                   <li><a href="#"><span className="glyphicon glyphicon-trash"></span></a></li>
                   <li><a href="#"><span className="glyphicon glyphicon-cog"></span></a></li>
-                  <li><a href="#"><span className="glyphicon glyphicon-bookmark"></span></a></li>
                   <li><a href="#"><span className="glyphicon glyphicon-home"></span></a></li>
+                  <li>
+                    <Button bsStyle="primary" bsSize="xsmall" onClick={this.showModal} style={{marginTop: 13, marginLeft: 10}}>
+                      Import Article
+                    </Button>
+                  </li>
+                  <Modal
+                    {...this.props}
+                    show={this.state.show}
+                    onHide={this.hideModal}
+                    dialogClassName="custom-modal"
+                  >
+                  <Modal.Header closeButton>
+                    <Modal.Title id="contained-modal-title-lg">Import</Modal.Title>
+                  </Modal.Header>
+                  <Modal.Body>
+                    <ImportForm />
+                  </Modal.Body>
+                  <Modal.Footer>
+                    <Button onClick={this.hideModal}>Close</Button>
+                    <Button bsStyle="primary" onClick={this.hideModal}>Import</Button>
+                  </Modal.Footer>
+                  </Modal>
                 </ul>
               </div>
             </div>
