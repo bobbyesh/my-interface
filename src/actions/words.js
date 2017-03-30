@@ -1,6 +1,5 @@
-
 export const SELECT_WORD = 'SELECT_WORD'
 
-export function selectWord(id, ev) {
-  return {type: SELECT_WORD, id: id, x: ev.clientX, y: ev.clientY};
+export function selectWord(word, x, y) {
+  return {type: SELECT_WORD, word: word, x: x, y: y};
 }

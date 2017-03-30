@@ -28,16 +28,11 @@ class Navbar extends Component {
               <div className="navbar-header">
                 <a href="#" className="navbar-brand">Modua</a>
               </div>
-              <div>
+              <div className="collapse navbar-collapse">
                 <ul className="nav navbar-nav navbar-right">
                   <li><a href="#"><span className="glyphicon glyphicon-trash"></span></a></li>
                   <li><a href="#"><span className="glyphicon glyphicon-cog"></span></a></li>
                   <li><a href="#"><span className="glyphicon glyphicon-home"></span></a></li>
-                  <li>
-                    <Button bsStyle="primary" bsSize="xsmall" onClick={this.showModal} style={{marginTop: 13, marginLeft: 10}}>
-                      Import Article
-                    </Button>
-                  </li>
                   <Modal
                     {...this.props}
                     show={this.state.show}
@@ -52,13 +47,17 @@ class Navbar extends Component {
                   </Modal.Body>
                   <Modal.Footer>
                     <Button onClick={this.hideModal}>Close</Button>
-                    <Button bsStyle="primary" onClick={this.hideModal}>Import</Button>
                   </Modal.Footer>
                   </Modal>
                 </ul>
               </div>
             </div>
           </nav>
+        </div>
+        <div className="row">
+          <Button bsStyle="primary" bsSize="xsmall" onClick={this.showModal} style={{marginTop: 13, marginLeft: 10}}>
+            Import Article
+          </Button>
         </div>
       </div>
     );

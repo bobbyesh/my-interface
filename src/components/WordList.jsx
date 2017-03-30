@@ -9,7 +9,6 @@ class WordList extends Component {
       return <div></div>
     }
 
-    let word = this.props.words.find((elem) => elem.id === this.props.selected_id);
     return (
       <div>
         <WordDetail x={this.props.x} y={this.props.y} id={word.id} definitions={word.definitions} word={word.word} />
@@ -19,7 +18,7 @@ class WordList extends Component {
 }
 
 const mapStateToProps = (state) => {
-  return {selected_id: state.id, x: state.x, y: state.y}
+  return {selected_id: state.words.id, x: state.words.x, y: state.words.y}
 }
 
 export default connect(mapStateToProps, null)(WordList)

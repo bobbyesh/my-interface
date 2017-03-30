@@ -11,10 +11,13 @@ class WordDetail extends Component {
   }
 
   handleClick(e) {
-    this.props.onWordDetailClick(e);
+    this.props.onWordDetailClick(e.clientX, e.clientY);
   }
 
   render() {
+    if (!this.props.word) {
+      return <div></div>
+    }
     var left = this.props.x + 20;
     var top = this.props.y + 20;
 
@@ -54,11 +57,13 @@ class WordDetail extends Component {
       marginRight: "2px",
     }
 
+    const pinyin = this.props.word.pinyin.map((elem, i) => <span key={i}>{elem}</span>)
+
     return (
       <div style={wordDetailStyle} id="selected" className="word-detail rounded" onClick={this.handleClick}>
-          <h3 style={alignCenter}>{this.props.word}</h3>
-          <p style={alignCenter} className="pinyin"><small className="text-muted">{this.props.pinyin}</small></p>
-          <Definitions definitions={this.props.definitions}/>
+          <h3 style={alignCenter}>{this.props.word.word}</h3>
+          <p style={alignCenter} className="pinyin"><small className="text-muted">{pinyin}</small></p>
+          <Definitions definitions={this.props.word.definitions}/>
           <div style={ranksStyle} className="rank-buttons text-center">
             <button style={rankButtonStyle} type="button" className="btn btn-sm btn-outline-primary">New</button>
             <button style={rankButtonStyle} type="button" className="btn btn-sm btn-outline-danger">Hard</button>
@@ -70,10 +75,21 @@ class WordDetail extends Component {
   }
 }
 
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    onWordDetailClick: (e) => dispatch(selectWord(-1, e))
+    onWordDetailClick: (x, y) => dispatch(selectWord(null, x, y))
   }
 }
 
-export default connect(null, mapDispatchToProps)(WordDetail)
+
+const mapStateToProps = (state) => {
+  return {
+    word: state.words.word,
+    x: state.words.x,
+    y: state.words.y,
+  }
+}
+
+
+export default connect(mapStateToProps, mapDispatchToProps)(WordDetail)
