@@ -4,7 +4,7 @@ import { connect } from 'react-redux'
 import { selectWord } from '../actions/words'
 
 class WordDetail extends Component {
-
+  
   constructor(props) {
     super(props)
     this.handleClick = this.handleClick.bind(this);
@@ -29,7 +29,6 @@ class WordDetail extends Component {
       top = window.innerHeight - 300
     }
 
-
     let wordDetailStyle = {
       left: left,
       top: top,
@@ -47,41 +46,32 @@ class WordDetail extends Component {
       textAlign: "center",
     };
 
-    let ranksStyle = {
-      paddingLeft: "20px",
-
-    }
-
-    let rankButtonStyle = {
-      marginLeft: "2px",
-      marginRight: "2px",
-    }
-
     const pinyin = this.props.word.pinyin.map((elem, i) => <span key={i}>{elem}</span>)
 
     return (
-      <div style={wordDetailStyle} id="selected" className="word-detail rounded" onClick={this.handleClick}>
-          <h3 style={alignCenter}>{this.props.word.word}</h3>
-          <p style={alignCenter} className="pinyin"><small className="text-muted">{pinyin}</small></p>
-          <Definitions definitions={this.props.word.definitions}/>
-          <div style={ranksStyle} className="rank-buttons text-center">
-            <button style={rankButtonStyle} type="button" className="btn btn-sm btn-outline-primary">New</button>
-            <button style={rankButtonStyle} type="button" className="btn btn-sm btn-outline-danger">Hard</button>
-            <button style={rankButtonStyle} type="button" className="btn btn-sm btn-outline-info">Easy</button>
-            <button style={rankButtonStyle} type="button" className="btn btn-sm btn-outline-secondary">Known</button>
+      <div style={wordDetailStyle} id="selected" className="word-detail rounded">
+        <div className="container" style={{maxWidth: 400}}>
+          <div className="row">
+          <div className="col col-md-4">
           </div>
+            <div className="col col-md-4">
+                <h3 style={alignCenter}>{this.props.word.word}</h3>
+                <p style={alignCenter} className="pinyin"><small className="text-muted">{pinyin}</small></p>
+            </div>
+            <div className="col col-md-4 text-right" style={{marginTop: 15}}>
+                <button className="glyphicon glyphicon-remove float-right"  onClick={this.handleClick}></button>
+            </div>
+          </div>
+          <div className="row">
+            <div className="col">
+              <Definitions definitions={this.props.word.definitions}/>
+            </div>
+          </div>
+        </div>
       </div>
     )
   }
 }
-
-
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onWordDetailClick: (x, y) => dispatch(selectWord(null, x, y))
-  }
-}
-
 
 const mapStateToProps = (state) => {
   return {
@@ -91,5 +81,10 @@ const mapStateToProps = (state) => {
   }
 }
 
+const mapDispatchToProps = (dispatch) => {
+  return {
+    onWordDetailClick: (x, y) => dispatch(selectWord(null, x, y))
+  }
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(WordDetail)

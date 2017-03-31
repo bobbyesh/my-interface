@@ -1,44 +1,35 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { Button, Modal} from 'react-bootstrap'
 import ImportForm from './ImportForm'
+import { showImportModal, hideImportModal } from '../actions/articles'
+
+var Radium = require('radium');
 
 class Navbar extends Component {
-
-  constructor(props) {
-    super(props)
-    this.state = {show: false}
-    this.showModal = this.showModal.bind(this)
-    this.hideModal = this.hideModal.bind(this)
-  }
-
-  showModal() {
-    this.setState({show: true})
-  }
-
-  hideModal() {
-    this.setState({show: false})
-  }
-
   render() {
     return (
       <div className="container">
         <div className="row">
-          <nav className="navbar navbar-default navbar-fixed-top">
+          <nav className="navbar navbar-default navbar-fixed-top" style={styles.navbarStyle}>
             <div className="container">
               <div className="navbar-header">
-                <a href="#" className="navbar-brand">Modua</a>
+                <a href="#" className="navbar-brand" style={styles.navbarBrandStyle}>Modua</a>
               </div>
               <div className="collapse navbar-collapse">
-                <ul className="nav navbar-nav navbar-right">
-                  <li><a href="#"><span className="glyphicon glyphicon-trash"></span></a></li>
-                  <li><a href="#"><span className="glyphicon glyphicon-cog"></span></a></li>
-                  <li><a href="#"><span className="glyphicon glyphicon-home"></span></a></li>
-                  <Modal
-                    {...this.props}
-                    show={this.state.show}
-                    onHide={this.hideModal}
-                    dialogClassName="custom-modal"
-                  >
+                <div className="nav navbar-nav navbar-right">
+                  <ul className="list-inline"
+                      style={styles.btnCircleStyle}
+                      ariaHidden="true"
+                      onClick={this.props.dispatchShowImportModal}>
+                      <li className="fa fa-circle-o"> </li>
+                      <li>Import Text</li>
+                  </ul>
+                    <Modal
+                      show={this.props.showImportModal}
+                      onHide={this.props.dispatchHideImportModal}
+                      dialogClassName="custom-modal"
+                    >
                   <Modal.Header closeButton>
                     <Modal.Title id="contained-modal-title-lg">Import</Modal.Title>
                   </Modal.Header>
@@ -46,22 +37,59 @@ class Navbar extends Component {
                     <ImportForm />
                   </Modal.Body>
                   <Modal.Footer>
-                    <Button onClick={this.hideModal}>Close</Button>
+                    <Button onClick={this.props.dispatchHideImportModal}>Close</Button>
                   </Modal.Footer>
                   </Modal>
-                </ul>
+                </div>
               </div>
             </div>
           </nav>
         </div>
         <div className="row">
-          <Button bsStyle="primary" bsSize="xsmall" onClick={this.showModal} style={{marginTop: 13, marginLeft: 10}}>
-            Import Article
-          </Button>
         </div>
       </div>
     );
   }
 }
 
-export default Navbar;
+const navFont = 'Raleway sans-serif'
+
+var styles = {
+      navbarStyle: {
+        padding: "23px 1px",
+        backgroundColor: "#FFFFFF",
+        borderWidth: '0px',
+      },
+
+      navbarBrandStyle: {
+        fontFamily: navFont,
+        fontSize: 38,
+      },
+
+      btnCircleStyle: {
+        padding: "15px 30px 10px 10px",
+        fontSize: 14,
+        color: "#95a5a6",
+        ':hover': {
+          color: "#2c3e50",
+        },
+
+        backgroundColor: "#FFFFFF",
+        fontFamily: navFont,
+      },
+}
+
+const mapStateToProps = (state) => {
+  return {
+    showImportModal: state.articles.showImportModal
+  }
+}
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatchShowImportModal: () => dispatch(showImportModal()),
+    dispatchHideImportModal: () => dispatch(hideImportModal()),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Radium(Navbar));

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FormGroup, HelpBlock, FormControl, Button, ControlLabel  } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { loadTitle, loadParagraphs } from '../actions/articles'
+import { loadTitle, loadParagraphs, hideImportModal } from '../actions/articles'
 
 var axios = require('axios')
 var Cookies = require('js-cookie')
@@ -42,6 +42,7 @@ class ImportForm extends Component {
           .then(response => {
               this.props.dispatchParagraphs(response.data.paragraphs)
               this.props.dispatchTitle(response.data.title)
+              this.props.hideImportModal()
           })
   }
 
@@ -110,6 +111,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     dispatchParagraphs: (paragraphs) => dispatch(loadParagraphs(paragraphs)),
     dispatchTitle: (title) => dispatch(loadTitle(title)),
+    hideImportModal: () => dispatch(hideImportModal()),
   }
 }
 
