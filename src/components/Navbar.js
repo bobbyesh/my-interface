@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Modal} from 'react-bootstrap'
 import ImportForm from './ImportForm'
-import { showImportModal, hideImportModal } from '../actions/articles'
+import { showImportModal, hideImportModal, displayAccount } from '../actions/articles'
 
 var Radium = require('radium');
 
@@ -21,10 +21,12 @@ var styles = {
       },
 
       ulStyle: {
-        padding: "15px 30px 10px 10px",
+        paddingTop: "18px",
       },
 
       liStyle: {
+        marginLeft: 3,
+        marginRight: 9,
         fontSize: 14,
         color: "#95a5a6",
         backgroundColor: "#FFFFFF",
@@ -45,22 +47,35 @@ class Navbar extends Component {
         <div className="row">
           <nav className="navbar navbar-default navbar-fixed-top" style={styles.navbarStyle}>
             <div className="container">
+            <div className="row">
               <div className="navbar-header">
                 <a href="#" className="navbar-brand" style={styles.navbarBrandStyle}>Modua</a>
               </div>
               <div className="collapse navbar-collapse">
                 <div className="nav navbar-nav navbar-right">
-                  <ul className="list-inline"
-                      style={styles.ulStyle}
-                      >
-                        <li
-                          className="fa fa-circle-o"
-                          onClick={this.props.dispatchShowImportModal}
-                          style={styles.liStyle}
-                        >
-                          <span style={styles.textStyle}> Import Text</span>
-                      </li>
+                  <ul
+                    className="list-inline"
+                    style={styles.ulStyle}
+                    onClick={this.props.dispatchDisplayAccount}
+                  >
+                    <li
+                      key={0}
+                      className="fa fa-user"
+                      style={styles.liStyle}
+                    >
+                      <span style={styles.liStyle}> Account</span>
+                    </li>
+
+                    <li
+                      key={1}
+                      className="fa fa-circle-o"
+                      onClick={this.props.dispatchShowImportModal}
+                      style={styles.liStyle}
+                    >
+                      <span style={styles.textStyle}> Import Text</span>
+                    </li>
                   </ul>
+                  </div>
                     <Modal
                       show={this.props.showImportModal}
                       onHide={this.props.dispatchHideImportModal}
@@ -98,6 +113,7 @@ const mapDispatchToProps = (dispatch) => {
   return {
     dispatchShowImportModal: () => dispatch(showImportModal()),
     dispatchHideImportModal: () => dispatch(hideImportModal()),
+    dispatchDisplayAccount: () => dispatch(displayAccount()),
   }
 }
 

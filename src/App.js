@@ -2,11 +2,12 @@ import React, { Component } from 'react'
 import reducer from './reducers/index'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
+import { connect } from 'react-redux'
 import Navbar from './components/Navbar'
 import Article from './components/Article'
 import Container from './components/Container'
 import WordDetail from './components/WordDetail'
-
+import Account from './components/Account'
 
 var styles = {
     div: {
@@ -16,18 +17,33 @@ var styles = {
 
 class App extends Component {
   render() {
+    var displayed = null
+    if (this.props.displayed === 'article') {
+      displayed =  <Article />
+    } else if (this.props.displayed === 'account'){
+      displayed = <Account />
+    } else {
+      displayed = null
+    }
+
+    console.log(displayed)
+
     return (
-      <Provider store={createStore(reducer)}>
         <div className="MyApp" style={styles.div}>
           <Navbar />
           <Container>
-            <Article />
+            {displayed}
           </Container>
           <WordDetail />
         </div>
-      </Provider>
     );
   }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return {
+    displayed: state.articles.displayed,
+  }
+}
+
+export default connect(mapStateToProps, null)(App);

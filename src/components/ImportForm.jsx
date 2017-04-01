@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { FormGroup, HelpBlock, FormControl, ControlLabel } from 'react-bootstrap'
 import { connect } from 'react-redux'
-import { loadTitle, loadParagraphs, hideImportModal } from '../actions/articles'
+import { loadTitle, loadParagraphs, hideImportModal, displayArticle } from '../actions/articles'
 var Radium = require('radium')
 
 // Wrap Button so that the style attribute is passed down correctly
@@ -59,6 +59,7 @@ class ImportForm extends Component {
           .then(response => {
               this.props.dispatchParagraphs(response.data.paragraphs)
               this.props.dispatchTitle(response.data.title)
+              this.props.dispatchDisplayArticle()
               this.props.hideImportModal()
           })
   }
@@ -126,6 +127,9 @@ const mapDispatchToProps = (dispatch) => {
   return {
     dispatchParagraphs: (paragraphs) => dispatch(loadParagraphs(paragraphs)),
     dispatchTitle: (title) => dispatch(loadTitle(title)),
+    dispatchDisplayArticle: () => {
+      dispatch(displayArticle())
+    },
     hideImportModal: () => dispatch(hideImportModal()),
   }
 }
