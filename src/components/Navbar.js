@@ -20,17 +20,22 @@ var styles = {
         fontSize: 38,
       },
 
-      circleStyle: {
+      ulStyle: {
         padding: "15px 30px 10px 10px",
+      },
+
+      liStyle: {
         fontSize: 14,
         color: "#95a5a6",
+        backgroundColor: "#FFFFFF",
         ':hover': {
           color: "#2c3e50",
         },
-
-        backgroundColor: "#FFFFFF",
-        fontFamily: navFont,
       },
+
+      textStyle: {
+        fontFamily: navFont,
+      }
 }
 
 class Navbar extends Component {
@@ -46,10 +51,15 @@ class Navbar extends Component {
               <div className="collapse navbar-collapse">
                 <div className="nav navbar-nav navbar-right">
                   <ul className="list-inline"
-                      style={styles.circleStyle}
-                      onClick={this.props.dispatchShowImportModal}>
-                      <li className="fa fa-circle-o"> </li>
-                      <li>Import Text</li>
+                      style={styles.ulStyle}
+                      >
+                        <li
+                          className="fa fa-circle-o"
+                          onClick={this.props.dispatchShowImportModal}
+                          style={styles.liStyle}
+                        >
+                          <span style={styles.textStyle}> Import Text</span>
+                      </li>
                   </ul>
                     <Modal
                       show={this.props.showImportModal}
