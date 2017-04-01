@@ -1,11 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
 import { selectWord } from '../actions/words'
+var Radium = require('radium')
+
+var styles = {
+  word: {
+    marginLeft: 1,
+    marginRight: 1,
+    transition: 'all 0.5s',
+    borderRadius: '25%',
+    ':hover': {
+      background: 'lightblue',
+    }
+  }
+}
 
 class Word extends Component {
   constructor(props) {
     super(props);
-    this.handleClick = this.handleClick.bind(this);
+    this.handleClick = this.handleClick.bind(this)
   }
 
   handleClick(e) {
@@ -13,11 +26,10 @@ class Word extends Component {
   }
 
   render() {
-
     return (
-      <span onClick={this.handleClick}>
+        <span style={styles.word} onClick={this.handleClick}>
           {this.props.word.word}
-      </span>
+        </span>
     )
   }
 }
@@ -30,4 +42,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(Word);
+export default connect(null, mapDispatchToProps)(Radium(Word));

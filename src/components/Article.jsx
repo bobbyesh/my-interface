@@ -3,7 +3,6 @@ import { connect } from 'react-redux'
 import Word from './Word'
 import Paragraph from './Paragraph'
 
-
 class Article extends Component {
   render() {
     let paragraphComponents = this.props.paragraphs.map((paragraph, pid) => {

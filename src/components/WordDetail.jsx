@@ -4,14 +4,23 @@ import { connect } from 'react-redux'
 import { selectWord } from '../actions/words'
 
 class WordDetail extends Component {
-  
+
   constructor(props) {
     super(props)
     this.handleClick = this.handleClick.bind(this);
+    this.componentDidMount = this.componentDidMount.bind(this);
   }
 
   handleClick(e) {
     this.props.onWordDetailClick(e.clientX, e.clientY);
+  }
+
+  componentDidMount() {
+    this.setState({opacity: 1}, () => {
+      if(!this.timeout)
+          clearTimeout(this.timeout);
+      this.timeout = setTimeout(() => this.setState({opacity:0}),4000);
+    });
   }
 
   render() {
@@ -40,6 +49,7 @@ class WordDetail extends Component {
       borderWidth: "3px",
       borderStyle: "solid",
       boxShadow: "2px 2px 1px #888888",
+      transition: "opacity 0.5s",
     };
 
     let alignCenter = {

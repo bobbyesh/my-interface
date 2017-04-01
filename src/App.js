@@ -7,11 +7,18 @@ import Article from './components/Article'
 import Container from './components/Container'
 import WordDetail from './components/WordDetail'
 
+
+var styles = {
+    div: {
+      fontFamily: 'Raleway sans-serif',
+    },
+}
+
 class App extends Component {
   render() {
     return (
       <Provider store={createStore(reducer)}>
-        <div className="MyApp">
+        <div className="MyApp" style={styles.div}>
           <Navbar />
           <Container>
             <Article />

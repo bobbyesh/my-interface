@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { FormGroup, HelpBlock, FormControl, Button, ControlLabel  } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { loadTitle, loadParagraphs, hideImportModal } from '../actions/articles'
+var Radium = require('radium')
 
 var axios = require('axios')
 var Cookies = require('js-cookie')
@@ -9,6 +10,19 @@ var Cookies = require('js-cookie')
 var csrftoken = Cookies.get('csrftoken')
 axios.defaults.xsrfHeaderName = "X-CSRFToken";
 axios.defaults.headers.common["X-CSRFToken"] = csrftoken;
+
+var styles = {
+  btnStyle:  {
+    background: '#fff',
+    borderColor: "#95a5a6",
+    color: "#95a5a6",
+    ":hover": {
+      color: "#2c3e50",
+      borderColor: "#2c3e50",
+      }
+    },
+}
+
 
 class ImportForm extends Component {
   constructor(props) {
@@ -62,7 +76,6 @@ class ImportForm extends Component {
       return 'error'
   }
 
-
   getTextValidationState() {
     if (this.state.text === null) {
       return null
@@ -72,6 +85,7 @@ class ImportForm extends Component {
   }
 
   render() {
+
     return (
       <form>
         <FormGroup
@@ -98,9 +112,7 @@ class ImportForm extends Component {
           placeholder="Copy and paste here..."
         />
         <HelpBlock>Title and text must not be empty</HelpBlock>
-
-        <Button bsStyle="primary" onClick={this.handleImportClick}>Import</Button>
-
+        <button className="btn btn-primary" style={styles.btnStyle} onClick={this.handleImportClick}>Import</button>
         </FormGroup>
       </form>
     )
@@ -115,4 +127,4 @@ const mapDispatchToProps = (dispatch) => {
   }
 }
 
-export default connect(null, mapDispatchToProps)(ImportForm)
+export default connect(null, mapDispatchToProps)(Radium(ImportForm))

@@ -6,6 +6,33 @@ import { showImportModal, hideImportModal } from '../actions/articles'
 
 var Radium = require('radium');
 
+const navFont = 'Raleway sans-serif'
+
+var styles = {
+      navbarStyle: {
+        padding: "23px 1px",
+        backgroundColor: "#FFFFFF",
+        borderWidth: '1px',
+      },
+
+      navbarBrandStyle: {
+        fontFamily: navFont,
+        fontSize: 38,
+      },
+
+      circleStyle: {
+        padding: "15px 30px 10px 10px",
+        fontSize: 14,
+        color: "#95a5a6",
+        ':hover': {
+          color: "#2c3e50",
+        },
+
+        backgroundColor: "#FFFFFF",
+        fontFamily: navFont,
+      },
+}
+
 class Navbar extends Component {
   render() {
     return (
@@ -19,8 +46,7 @@ class Navbar extends Component {
               <div className="collapse navbar-collapse">
                 <div className="nav navbar-nav navbar-right">
                   <ul className="list-inline"
-                      style={styles.btnCircleStyle}
-                      ariaHidden="true"
+                      style={styles.circleStyle}
                       onClick={this.props.dispatchShowImportModal}>
                       <li className="fa fa-circle-o"> </li>
                       <li>Import Text</li>
@@ -50,33 +76,6 @@ class Navbar extends Component {
       </div>
     );
   }
-}
-
-const navFont = 'Raleway sans-serif'
-
-var styles = {
-      navbarStyle: {
-        padding: "23px 1px",
-        backgroundColor: "#FFFFFF",
-        borderWidth: '0px',
-      },
-
-      navbarBrandStyle: {
-        fontFamily: navFont,
-        fontSize: 38,
-      },
-
-      btnCircleStyle: {
-        padding: "15px 30px 10px 10px",
-        fontSize: 14,
-        color: "#95a5a6",
-        ':hover': {
-          color: "#2c3e50",
-        },
-
-        backgroundColor: "#FFFFFF",
-        fontFamily: navFont,
-      },
 }
 
 const mapStateToProps = (state) => {
