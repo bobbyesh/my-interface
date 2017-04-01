@@ -10,7 +10,6 @@ class Article extends Component {
         return <Paragraph key={pid}>{words}</Paragraph>
       })
     let title = this.props.title.map((word, id) => <Word key={id} word={word}/>)
-
     return (
           <article>
             <header>

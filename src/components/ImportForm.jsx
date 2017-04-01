@@ -1,8 +1,12 @@
 import React, { Component } from 'react'
-import { FormGroup, HelpBlock, FormControl, Button, ControlLabel  } from 'react-bootstrap'
+import { FormGroup, HelpBlock, FormControl, ControlLabel } from 'react-bootstrap'
 import { connect } from 'react-redux'
 import { loadTitle, loadParagraphs, hideImportModal } from '../actions/articles'
 var Radium = require('radium')
+
+// Wrap Button so that the style attribute is passed down correctly
+var Button = require('react-bootstrap').Button
+Button = Radium(Button)
 
 var axios = require('axios')
 var Cookies = require('js-cookie')
@@ -22,7 +26,6 @@ var styles = {
       }
     },
 }
-
 
 class ImportForm extends Component {
   constructor(props) {
@@ -112,7 +115,7 @@ class ImportForm extends Component {
           placeholder="Copy and paste here..."
         />
         <HelpBlock>Title and text must not be empty</HelpBlock>
-        <button className="btn btn-primary" style={styles.btnStyle} onClick={this.handleImportClick}>Import</button>
+        <Button className="btn btn-primary" style={styles.btnStyle} onClick={this.handleImportClick}>Import</Button>
         </FormGroup>
       </form>
     )
