@@ -13,6 +13,8 @@ var styles = {
         padding: "23px 1px",
         backgroundColor: "#FFFFFF",
         borderWidth: '1px',
+        borderWidth: '0px 0px 1px 0px',
+
       },
 
       navbarBrandStyle: {
@@ -41,17 +43,50 @@ var styles = {
 }
 
 class Navbar extends Component {
+    constructor(props) {
+      super(props)
+      this.componentDidMount = this.componentDidMount.bind(this)
+      this.componentWillUnmount = this.componentWillUnmount.bind(this)
+      this.handleScroll = this.handleScroll.bind(this)
+      this.state = {visible: true}
+    }
+
+    componentDidMount() {
+        window.addEventListener('scroll', this.handleScroll);
+    }
+
+    componentWillUnmount() {
+        window.removeEventListener('scroll', this.handleScroll);
+    }
+
+    handleScroll(event) {
+      console.log('scrolling')
+      if (window.scrollY > 50) {
+        this.setState({...this.state, visible: false})
+      } else {
+        this.setState({...this.state, visible: true})
+      }
+    }
+
   render() {
+
+    var navbarStyle = {
+      ...styles.navbarStyle,
+      opacity: this.state.visible ? 1 : 0,
+      transition: 'opacity 0.5s',
+    }
+
+    console.log(navbarStyle)
+
     return (
       <div className="container">
         <div className="row">
-          <nav className="navbar navbar-default navbar-fixed-top" style={styles.navbarStyle}>
+          <nav className="navbar navbar-default navbar-static-top" style={navbarStyle}>
             <div className="container">
             <div className="row">
               <div className="navbar-header">
                 <a href="#" className="navbar-brand" style={styles.navbarBrandStyle}>Modua</a>
               </div>
-              <div className="collapse navbar-collapse">
                 <div className="nav navbar-nav navbar-right">
                   <ul
                     className="list-inline"
@@ -60,19 +95,19 @@ class Navbar extends Component {
                   >
                     <li
                       key={0}
-                      className="fa fa-user"
+                      className="fa fa-user navbar-link"
                       style={styles.liStyle}
                     >
-                      <span style={styles.liStyle}> Account</span>
+                      <span key={2} style={styles.liStyle}> Account</span>
                     </li>
 
                     <li
                       key={1}
-                      className="fa fa-circle-o"
+                      className="fa fa-circle-o navbar-link"
                       onClick={this.props.dispatchShowImportModal}
                       style={styles.liStyle}
                     >
-                      <span style={styles.textStyle}> Import Text</span>
+                      <span key={3} style={styles.liStyle}> Import Text</span>
                     </li>
                   </ul>
                   </div>
@@ -93,7 +128,6 @@ class Navbar extends Component {
                   </Modal>
                 </div>
               </div>
-            </div>
           </nav>
         </div>
         <div className="row">

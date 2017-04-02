@@ -4,7 +4,8 @@ from selenium import webdriver
 
 driver = webdriver.Chrome()  # Optional argument, if not specified will search path.
 driver.get('http://localhost:3000/')
-elem = driver.find_element_by_xpath('//*[@id="root"]/div/div[1]/div[1]/nav/div/div/div[2]/div/ul/li[2]/span')
+import_xpath = '//*[@id="root"]/div/div[1]/div[1]/nav/div/div/div[2]/ul/li[2]/span'
+elem = driver.find_element_by_xpath(import_xpath)
 elem.click()
 elem = driver.find_element_by_xpath('//*[@id="formControlsTitlearea"]')
 title = u'中国新感觉派'
