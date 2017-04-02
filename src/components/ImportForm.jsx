@@ -3,6 +3,7 @@ import { FormGroup, HelpBlock, FormControl, ControlLabel } from 'react-bootstrap
 import { connect } from 'react-redux'
 import { loadTitle, loadParagraphs, hideImportModal, displayArticle } from '../actions/articles'
 var Radium = require('radium')
+import { URL } from '../Client'
 
 // Wrap Button so that the style attribute is passed down correctly
 var Button = require('react-bootstrap').Button
@@ -51,7 +52,7 @@ class ImportForm extends Component {
           return;
     }
 
-    var url = 'http://127.0.0.1:8000/api/article/'
+    var url = URL + 'article'
     axios.post(url, {
             title: this.state.title,
             text: this.state.text,

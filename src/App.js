@@ -8,6 +8,7 @@ import Article from './components/Article'
 import Container from './components/Container'
 import WordDetail from './components/WordDetail'
 import Account from './components/Account'
+import Landing from './components/Landing/Landing'
 
 var styles = {
     div: {
@@ -15,6 +16,7 @@ var styles = {
     },
 }
 
+/*
 class App extends Component {
   render() {
     var displayed = null
@@ -47,3 +49,14 @@ const mapStateToProps = (state) => {
 }
 
 export default connect(mapStateToProps, null)(App);
+*/
+
+class App extends Component {
+  render() {
+    return (
+      <Landing />
+    )
+  }
+}
+
+export default App;
