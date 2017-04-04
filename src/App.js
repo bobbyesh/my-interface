@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+/*
 import reducer from './reducers/index'
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
@@ -8,6 +9,7 @@ import Article from './components/Article'
 import Container from './components/Container'
 import WordDetail from './components/WordDetail'
 import Account from './components/Account'
+*/
 import Landing from './components/Landing/Landing'
 
 var styles = {

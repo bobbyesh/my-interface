@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import Radium from 'radium'
 
 var styles = {
 	navbar: {
@@ -17,6 +18,16 @@ var styles = {
 
 	active: {
 		background: 'none',
+		color: 'white',
+	},
+
+	signin: {
+		':hover': {
+			border: '1px solid rgba(255,255,255,.6)',
+			color: 'white',
+		},
+		marginLeft: 5,
+		border: '1px solid rgba(255, 255, 255, .2)',
 	},
 }
 
@@ -28,7 +39,6 @@ class Navbar2 extends Component {
 			mobileNavButtonVisible: false,
 			mobileNavLinksVisible: false,
 		}
-		this.handleResize = this.handleResize.bind(this)
 		this.componentDidMount = this.componentDidMount.bind(this)
 		this.componentWillUnmount = this.componentWillUnmount.bind(this)
 		this.renderNavLinks = this.renderNavLinks.bind(this)
@@ -43,7 +53,6 @@ class Navbar2 extends Component {
 			windowWidth: window.innerWidth,
 			mobileNavButtonVisible: window.innerWidth <= 480,
 		});
-		console.log(this.state)
 	}
 
 	componentDidMount() {
@@ -58,8 +67,32 @@ class Navbar2 extends Component {
 		this.setState({...this.state, mobileNavLinksVisible: !this.state.mobileNavLinksVisible})
 	}
 
+	render() {
+		return (
+			<div className="navbar navbar-inverse navbar-fixed-top" style={styles.navbar}>
+				<div className="container">
+					<div className="navbar-header">
+						<a className="navbar-brand" href="#" style={styles.brand}>Readable</a>
+					</div>
+					<div>
+							{this.renderNavLinks()}
+					</div>
+				</div>
+			</div>
+		)
+	}
+
+	renderNavLinks() {
+		return (
+				<div>
+				  {this.renderMobileButton()}
+					{this.renderMobileDropDown()}
+				</div>
+			)
+
+	}
+
 	renderMobileButton() {
-		console.log('renderMobileButton!', this.state.mobileNavButtonVisible)
 		if (this.state.mobileNavButtonVisible) {
 			return (
 				<button type="button" className="navbar-toggle" onClick={this.handleMobileNavClick}>
@@ -73,60 +106,58 @@ class Navbar2 extends Component {
 			}
 	}
 
-
-	renderNavLinks() {
-		var links = null
-		var button = this.renderMobileButton()
-		var mobileDropDown = this.renderMobileDropDown()
-		if (this.state.windowWidth > 480) {
-			return (
-				<ul className="nav navbar-nav pull-right">
-					<li key={0} className="active"><a href="#" style={styles.active}>Home</a></li>,
-					<li key={1}><a href="#">About</a></li>,
-					<li key={2}><a href="#">Contact</a></li>,
-					<li key={3}><a className="btn" href="#">SIGN IN / SIGN UP</a></li>,
-				</ul>
-			)
-		} else {
-			return (
-				<div>
-				  {this.renderMobileButton()}
-					{this.renderMobileDropDown()}
-				</div>
-			)
-		}
-	}
-
 	renderMobileDropDown() {
-		if (this.state.mobileNavLinksVisible) {
+		console.log(this.props)
+		var pullDirection = this.state.windowWidth > 480 ? 'pull-right' : 'pull-left'
+		var homeStyle = this.props.displayed === 'home' ? styles.active : {}
+		var aboutStyle = this.props.displayed === 'about' ? styles.active : {}
+		var contactStyle = this.props.displayed === 'contact' ? styles.active : {}
+		var signinStyle = this.props.displayed === 'signin' ? Object.assign({}, styles.signin, styles.active) : styles.signin
+
+		if (this.state.mobileNavLinksVisible || !this.state.mobileNavButtonVisible) {
 			return (
-				<ul className="nav navbar-nav pull-left">
-					<li key={0} className="active"><a href="#" style={styles.active}>Home</a></li>,
-					<li key={1}><a href="#">About</a></li>,
-					<li key={2}><a href="#">Contact</a></li>,
-					<li key={3}><a className="btn" href="#">SIGN IN / SIGN UP</a></li>,
+				<ul className={"nav navbar-nav " + pullDirection}>
+					<li key={0} className='nav-item'>
+						<a
+							href="#"
+							style={homeStyle}
+							onClick={this.props.handleHomeClick}>
+								Home
+						</a>
+					</li>
+					<li key={1} className='nav-item'>
+						<a
+							style={aboutStyle}
+							onClick={this.props.handleAboutClick}
+							href="#">
+								About
+						</a>
+					</li>
+					<li key={2} className='nav-item'>
+						<a
+							href="#"
+							onClick={this.props.handleContactClick}
+							style={contactStyle}
+							>
+								Contact
+						</a>
+					</li>
+					<li key={3} className='nav-item'>
+						<a
+							className="btn"
+							href="#"
+							style={signinStyle}
+							onClick={this.props.handleSigninClick}
+							>
+								SIGN IN / SIGN UP
+						</a>
+					</li>
 				</ul>
-			)
+				)
 		} else {
 			return null
 		}
 	}
-
-	render() {
-		var navLinks = this.renderNavLinks()
-		return (
-			<div className="navbar navbar-inverse navbar-fixed-top" style={styles.navbar}>
-				<div className="container">
-					<div className="navbar-header">
-						<a className="navbar-brand" href="#" style={styles.brand}>Readable</a>
-					</div>
-					<div>
-							{navLinks}
-					</div>
-				</div>
-			</div>
-		)
-	}
 }
 
-export default Navbar2
+export default Radium(Navbar2)

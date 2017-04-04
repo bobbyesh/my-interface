@@ -34,10 +34,12 @@ class Header extends Component {
         <header style={styles.header}>
           <div className="container">
             <div className="row">
-              <h1 className="lead" style={styles.lead}>
-                An Easy Way to Learn a New Language
-              </h1>
-              <p style={styles.tagline}>Readable: An assisted reader so you can learn a language with content you're actually interested in.</p>
+              <div className="col-sm-12">
+                <h1 className="lead" style={styles.lead}>
+                  An Easy Way to Learn a New Language
+                </h1>
+                <p style={styles.tagline}>Readable: An assisted reader so you can learn a language with content you're actually interested in.</p>
+              </div>
             </div>
           </div>
         </header>

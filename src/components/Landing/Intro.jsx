@@ -15,13 +15,17 @@ class Intro extends Component {
 
     return (
       <div className="container">
-        <br/><br/>
-        <h2 className="text-center" style={styles.header}>
-          Readable is a fast and easy way to to learn a language.
-        </h2>
-        <p className="text-muted text-center">
-          Readable takes you beyond the intermediate stage and into native-level content.
-    		</p>
+        <div className="row">
+          <div className="col-sm-12">
+            <br/><br/>
+            <h2 className="text-center" style={styles.header}>
+              Readable is a fast and easy way to to learn a language.
+            </h2>
+            <p className="text-muted text-center">
+              Readable takes you beyond the intermediate stage and into native-level content.
+        		</p>
+          </div>
+        </div>
       </div>
     )
   }
