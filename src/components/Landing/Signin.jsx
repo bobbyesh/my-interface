@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import UsernameInputGroup from './UsernameInputGroup'
+import PasswordInputGroup from './PasswordInputGroup'
 
 var styles = {
   inputGroup: {
@@ -50,26 +52,14 @@ class Signin extends Component {
                   </p>
     							<hr />
                   <form>
-                    <div className="input-group" style={styles.inputGroup}>
-                      <label htmlFor="username" >Username <span>*</span></label>
-                      <input
-                        type="text"
-                        id="username"
-                        className="form-control"
-                        placeholder="Username"
-                        onChange={e => this.setState({username: e.target.value})}
-                      />
-                    </div>
-                    <div className="input-group" style={styles.inputGroup}>
-                      <label htmlFor="password" >Password <span>*</span></label>
-                      <input
-                        type="password"
-                        id="password"
-                        className="form-control"
-                        placeholder="Password"
-                        onChange={e => this.setState({password: e.target.value})}
-                      />
-                    </div>
+                    <UsernameInputGroup
+                      style={styles.inputGroup}
+                      handleOnChange={e => this.setState({...this.state, username: e.target.value})}
+                    />
+                    <PasswordInputGroup
+                      style={styles.inputGroup}
+                      handleOnChange={e => this.setState({...this.state, password1: e.target.value})}
+                    />
                     <div className="form-actions">
                       <input
                         style={styles.submitButton}

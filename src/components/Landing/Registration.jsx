@@ -1,6 +1,10 @@
 import React, { Component } from 'react'
 import { URL } from '../../Client'
 import axios from '../../Client'
+import validator from 'validator'
+import UsernameInputGroup from './UsernameInputGroup'
+import EmailInputGroup from './EmailInputGroup'
+import PasswordInputGroup from './PasswordInputGroup'
 
 var styles = {
   inputGroup: {
@@ -20,6 +24,19 @@ var styles = {
   }
 }
 
+var isValidUsername = function(username) {
+  var specialChars = '@.+-_'
+  for (var i=0; i< username.length; i++) {
+    var ch = username[i]
+    var isSpecial = specialChars.indexOf(username.substr(i, 1)) !== -1
+    if (!(isSpecial || validator.isAlpha(ch))) {
+      return false
+    }
+  }
+
+  return true
+}
+
 class Registration extends Component {
   constructor(props) {
     super(props)
@@ -29,6 +46,9 @@ class Registration extends Component {
       password1: '',
       password2: '',
       passwordsMatch: true,
+      emailIsValid: true,
+      usernameIsValid: true,
+      usernameErrorMsg: '',
     }
     this.handleSubmitButton = this.handleSubmitButton.bind(this)
   }
@@ -36,14 +56,38 @@ class Registration extends Component {
   handleSubmitButton(e) {
     e.preventDefault()
     var passwordsMatch = this.state.password1 === this.state.password2
-    this.setState({...this.state, passwordsMatch: passwordsMatch})
-    if (passwordsMatch && this.state.username !== '' && this.state.email !== '') {
-      axios.get(URL).then(response => console.log(response))
-      console.log(URL)
+    var emailIsValid = validator.isEmail(this.state.email)
+    var usernameIsValid = isValidUsername(this.state.username)
+    this.setState({
+      ...this.state,
+      passwordsMatch: passwordsMatch,
+      emailIsValid: emailIsValid,
+      usernameIsValid: usernameIsValid,
+    })
+    if (passwordsMatch && emailIsValid && usernameIsValid) {
+      var data = {
+        username: this.state.username,
+        email: this.state.email,
+        password: this.state.password1,
+      }
+      axios.post(URL + '/api/auth/register/', {
+          username: this.state.username,
+          email: this.state.email,
+          password: this.state.password1,
+        }).then(response => {
+          console.log(response)
+          console.log(response.data)
+        }).catch(error => {
+          if ('username' in error.response.data){
+            this.setState({...this.state, 'usernameErrorMsg': error.response.data.username[0]})
+          }
+        })
     }
   }
 
   render() {
+    console.log(this.state)
+
     var isBordered = this.state.password2 !== '' && (this.state.password1 !== this.state.password2)
     var confirmationStyle = null
     if (isBordered){
@@ -57,8 +101,13 @@ class Registration extends Component {
 
     var didNotMatchElem = null
     if (!this.state.passwordsMatch) {
-      didNotMatchElem = <span style={{color: 'red'}}>Passwords did not match</span>
+      didNotMatchElem = <span style={{color: 'red'}}>Passwords do not match</span>
     }
+
+    var warning = (text) => <div style={{color: 'red'}}>Please enter a valid {text}</div>
+    var usernameWarning = this.state.usernameIsValid ? null : warning('username')
+    var usernameErrorMsg = this.state.usernameErrorMsg === '' ? null : <div style={{color: 'red'}}>Username already taken.</div>
+    var emailWarning = this.state.emailIsValid ? null : warning('email')
 
     return (
       <div className="container">
@@ -80,37 +129,22 @@ class Registration extends Component {
                   </p>
     							<hr />
                   <form>
-                    <div className="input-group" style={styles.inputGroup}>
-                      <label htmlFor="username" >Username <span>*</span></label>
-                      <input
-                        type="text"
-                        id="username"
-                        className="form-control"
-                        placeholder="Username"
-                        onChange={e => this.setState({...this.state, username: e.target.value})}
-                      />
-                    </div>
+                    <UsernameInputGroup
+                      style={styles.inputGroup}
+                      handleOnChange={e => this.setState({...this.state, username: e.target.value, usernameErrorMsg: ''})}
+                    />
+                    {usernameWarning}
+                    {usernameErrorMsg}
                     <small>Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.</small>
-                    <div className="input-group" style={styles.inputGroup}>
-                      <label htmlFor="email" >Email <span>*</span></label>
-                      <input
-                        type="email"
-                        id="email"
-                        className="form-control"
-                        placeholder="myemail@email.com"
-                        onChange={e => this.setState({...this.state, email: e.target.value})}
-                      />
-                    </div>
-                    <div className="input-group" style={styles.inputGroup}>
-                      <label htmlFor="password" >Password <span>*</span></label>
-                      <input
-                        type="password"
-                        id="password"
-                        className="form-control"
-                        placeholder="Password"
-                        onChange={e => this.setState({...this.state, password1: e.target.value})}
-                      />
-                    </div>
+                    <EmailInputGroup
+                      style={styles.inputGroup}
+                      handleOnChange={e => this.setState({...this.state, email: e.target.value})}
+                    />
+                    {emailWarning}
+                    <PasswordInputGroup
+                      style={styles.inputGroup}
+                      handleOnChange={e => this.setState({...this.state, password1: e.target.value})}
+                    />
                     <div className="input-group" style={styles.inputGroup}>
                       <label htmlFor="password" >Confirm Password <span>*</span></label>
                       <input

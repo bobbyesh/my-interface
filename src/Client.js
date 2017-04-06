@@ -1,4 +1,4 @@
-export const URL = 'http://127.0.0.1:8000/api/'
+export const URL = 'http://127.0.0.1:8000'
 
 var axios = require('axios')
 var Cookies = require('js-cookie')
