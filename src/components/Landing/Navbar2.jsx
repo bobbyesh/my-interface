@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Radium from 'radium'
+import { Link } from 'react-router-dom'
 
 var styles = {
 	navbar: {
@@ -72,7 +73,7 @@ class Navbar2 extends Component {
 			<div className="navbar navbar-inverse navbar-fixed-top" style={styles.navbar}>
 				<div className="container">
 					<div className="navbar-header">
-						<a className="navbar-brand" href="#" style={styles.brand}>Readable</a>
+						<Link className="navbar-brand" style={styles.brand} to="/">Readable</Link>
 					</div>
 					<div>
 							{this.renderNavLinks()}
@@ -117,39 +118,39 @@ class Navbar2 extends Component {
 			return (
 				<ul className={"nav navbar-nav " + pullDirection}>
 					<li key={0} className='nav-item'>
-						<a
-							href="#"
+						<Link
+							to="/"
 							style={homeStyle}
 							onClick={this.props.handleHomeClick}>
 								Home
-						</a>
+						</Link>
 					</li>
 					<li key={1} className='nav-item'>
-						<a
+						<Link
 							style={aboutStyle}
 							onClick={this.props.handleAboutClick}
-							href="#">
+							to="/about/">
 								About
-						</a>
+						</Link>
 					</li>
 					<li key={2} className='nav-item'>
-						<a
-							href="#"
+						<Link
+							to="/contact/"
 							onClick={this.props.handleContactClick}
 							style={contactStyle}
 							>
 								Contact
-						</a>
+						</Link>
 					</li>
 					<li key={3} className='nav-item'>
-						<a
+						<Link
 							className="btn"
-							href="#"
+							to="/signin/"
 							style={signinStyle}
 							onClick={this.props.handleSigninClick}
 							>
 								SIGN IN / SIGN UP
-						</a>
+						</Link>
 					</li>
 				</ul>
 				)

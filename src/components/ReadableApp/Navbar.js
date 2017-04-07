@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Modal} from 'react-bootstrap'
+import { BrowserRouter as Router, Link } from 'react-router-dom'
 import ImportForm from './ImportForm'
 import { showImportModal, hideImportModal, displayAccount } from '../../actions/articles'
 
@@ -76,13 +77,14 @@ class Navbar extends Component {
     }
 
     return (
+      <Router>
       <div className="container">
         <div className="row">
           <nav className="navbar navbar-default navbar-static-top" style={navbarStyle}>
             <div className="container">
             <div className="row">
               <div className="navbar-header">
-                <a href="#" className="navbar-brand" style={styles.navbarBrandStyle}>Modua</a>
+                <Link className="navbar-brand" to="/app/" style={styles.navbarBrandStyle}>Modua</Link>
               </div>
                 <div className="nav navbar-nav navbar-right">
                   <ul
@@ -95,7 +97,7 @@ class Navbar extends Component {
                       style={styles.liStyle}
                       onClick={this.props.dispatchDisplayAccount}
                     >
-                      <span key={2} style={styles.liStyle}> Account</span>
+                      <Link to="/app/account" key={2} style={styles.liStyle}> Account</Link>
                     </li>
 
                     <li
@@ -104,7 +106,7 @@ class Navbar extends Component {
                       onClick={this.props.dispatchShowImportModal}
                       style={styles.liStyle}
                     >
-                      <span key={3} style={styles.liStyle}> Import Text</span>
+                      <Link to="/app/import" key={3} style={styles.liStyle}> Import Text</Link>
                     </li>
                   </ul>
                   </div>
@@ -130,6 +132,7 @@ class Navbar extends Component {
         <div className="row">
         </div>
       </div>
+    </Router>
     );
   }
 }

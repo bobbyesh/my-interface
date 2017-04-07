@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Navbar2 from './Navbar2'
 import Header from './Header'
 import Intro from './Intro'
@@ -9,6 +10,7 @@ import Contact from './Contact'
 import Signin from './Signin'
 import Registration from './Registration'
 import RegistrationSuccessful from './RegistrationSuccessful'
+import Home from './Home'
 
 class Landing extends Component {
   static ABOUT = 'ABOUT'
@@ -55,62 +57,21 @@ class Landing extends Component {
   }
 
   render() {
-    let navbar = <Navbar2
-      handleAboutClick={this.handleAboutClick}
-      handleHomeClick={this.handleHomeClick}
-      handleContactClick={this.handleContactClick}
-      handleSigninClick={this.handleSigninClick}
-      displayed={this.state.displayed}
-    />
+    return (
+        <Router>
+          <div>
+            <Route exact path="/" component={Home} />
+            <Route path="/about/" component={About} />
+            <Route path="/contact/" component={Contact} />
+            <Route path="/signin/" component={Signin} />
+            <Route path="/register/" component={Registration} />
+          </div>
+        </Router>
+    )
+  }
+}
 
-    if (this.state.displayed === Landing.HOME) {
-      return (
-        <div>
-          {navbar}
-          <Header />
-          <Intro />
-          <Footer />
-        </div>
-      )
-    } else if (this.state.displayed === Landing.ABOUT) {
-      return (
-        <div>
-          <MiniHeader />
-          {navbar}
-          <About />
-          <Footer />
-        </div>
-      )
-    } else if (this.state.displayed === Landing.CONTACT) {
-      return (
-        <div>
-          <MiniHeader />
-          {navbar}
-          <Contact />
-          <Footer />
-        </div>
-      )
-    }  else if (this.state.displayed === Landing.SIGNIN) {
-      return (
-        <div>
-          <MiniHeader />
-          {navbar}
-          <Signin handleRegistrationClick={this.handleRegistrationClick} />
-          <Footer />
-        </div>
-      )
-    } else if (this.state.displayed === Landing.REGISTRATION) {
-      return (
-        <div>
-          <MiniHeader />
-          {navbar}
-          <Registration
-            handleSigninClick={this.handleSigninClick}
-            switchToRegistrationSuccessfulScreen={this.switchToRegistrationSuccessfulScreen}
-          />
-          <Footer />
-        </div>
-      )
+/*
     } else if (this.state.displayed === Landing.REGISTRATION_SUCCESSFUL) {
       return (
         <div>
@@ -123,5 +84,6 @@ class Landing extends Component {
     }
   }
 }
+*/
 
 export default Landing

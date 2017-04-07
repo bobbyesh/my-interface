@@ -1,10 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import client from '../../Client'
 import validator from 'validator'
+import { Link } from 'react-router-dom'
+import client from '../../Client'
 import UsernameInputGroup from './UsernameInputGroup'
 import EmailInputGroup from './EmailInputGroup'
 import PasswordInputGroup from './PasswordInputGroup'
+import MiniHeader from './MiniHeader'
+import Navbar2 from './Navbar2'
+import Footer from './Footer'
 import { storeUsername, storeToken } from '../../actions/user'
 
 var styles = {
@@ -119,70 +123,75 @@ class Registration extends Component {
     var emailWarning = this.state.emailIsValid ? null : warning('email')
 
     return (
-      <div className="container">
-        <ol className="breadcrumb">
-      			<li><a href="/">Home</a></li>
-      			<li className="active">User access</li>
-    		</ol>
-        <div className="row">
-    			<article className="col-xs-12">
-    				<header>
-    					<h1>Login</h1>
-    				</header>
-            <div className="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
-    					<div className="panel panel-default">
-    						<div className="panel-body">
-    							<h3 className="text-center">Register a new account</h3>
-    							<p className="text-center text-muted">If you already have an account, please
-                    {" "}<a href="#" onClick={this.props.handleSigninClick}>login</a>.
-                  </p>
-    							<hr />
-                  <form>
-                    <UsernameInputGroup
-                      style={styles.inputGroup}
-                      handleOnChange={e => this.setState({...this.state, username: e.target.value, usernameErrorMsg: ''})}
-                    />
-                    {usernameWarning}
-                    {usernameErrorMsg}
-                    <small>Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.</small>
-                    <EmailInputGroup
-                      style={styles.inputGroup}
-                      handleOnChange={e => this.setState({...this.state, email: e.target.value})}
-                    />
-                    {emailWarning}
-                    <PasswordInputGroup
-                      style={styles.inputGroup}
-                      handleOnChange={e => this.setState({...this.state, password1: e.target.value})}
-                    />
-                    <div className="input-group" style={styles.inputGroup}>
-                      <label htmlFor="password" >Confirm Password <span>*</span></label>
-                      <input
-                        style={confirmationStyle}
-                        type="password"
-                        id="password-confirm"
-                        className="form-control"
-                        placeholder="Password confirmation"
-                        onChange={e => this.setState({...this.state, password2: e.target.value})}
-                      />
+      <div>
+        <MiniHeader />
+        <Navbar2 />
+          <div className="container">
+            <ol className="breadcrumb">
+          			<li><a href="/">Home</a></li>
+          			<li className="active">User access</li>
+        		</ol>
+            <div className="row">
+        			<article className="col-xs-12">
+        				<header>
+        					<h1>Login</h1>
+        				</header>
+                <div className="col-md-6 col-md-offset-3 col-sm-8 col-sm-offset-2">
+        					<div className="panel panel-default">
+        						<div className="panel-body">
+        							<h3 className="text-center">Register a new account</h3>
+        							<p className="text-center text-muted">If you already have an account, please
+                        {" "}<Link to="/signin/">login</Link>.
+                      </p>
+        							<hr />
+                      <form>
+                        <UsernameInputGroup
+                          style={styles.inputGroup}
+                          handleOnChange={e => this.setState({...this.state, username: e.target.value, usernameErrorMsg: ''})}
+                        />
+                        {usernameWarning}
+                        {usernameErrorMsg}
+                        <small>Required. 30 characters or fewer. Letters, digits and @/./+/-/_ only.</small>
+                        <EmailInputGroup
+                          style={styles.inputGroup}
+                          handleOnChange={e => this.setState({...this.state, email: e.target.value})}
+                        />
+                        {emailWarning}
+                        <PasswordInputGroup
+                          style={styles.inputGroup}
+                          handleOnChange={e => this.setState({...this.state, password1: e.target.value})}
+                        />
+                        <div className="input-group" style={styles.inputGroup}>
+                          <label htmlFor="password" >Confirm Password <span>*</span></label>
+                          <input
+                            style={confirmationStyle}
+                            type="password"
+                            id="password-confirm"
+                            className="form-control"
+                            placeholder="Password confirmation"
+                            onChange={e => this.setState({...this.state, password2: e.target.value})}
+                          />
+                        </div>
+                        {didNotMatchElem}
+                        <div className="form-actions">
+                          <input
+                            style={styles.submitButton}
+                            type="submit"
+                            name="submit"
+                            value="Login"
+                            className="btn btn-primary"
+                            id="submit"
+                            onClick={this.handleSubmitButton}
+                          />
+                        </div>
+                      </form>
                     </div>
-                    {didNotMatchElem}
-                    <div className="form-actions">
-                      <input
-                        style={styles.submitButton}
-                        type="submit"
-                        name="submit"
-                        value="Login"
-                        className="btn btn-primary"
-                        id="submit"
-                        onClick={this.handleSubmitButton}
-                      />
-                    </div>
-                  </form>
-                </div>
-        			</div>
-      			</div>
-          </article>
-    		</div>
+            			</div>
+          			</div>
+              </article>
+        		</div>
+          </div>
+        <Footer />
       </div>
     )
   }
