@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import { Button, Modal} from 'react-bootstrap'
 import ImportForm from './ImportForm'
-import { showImportModal, hideImportModal, displayAccount } from '../actions/articles'
+import { showImportModal, hideImportModal, displayAccount } from '../../actions/articles'
 
 var Radium = require('radium');
 
@@ -12,7 +12,6 @@ var styles = {
       navbarStyle: {
         padding: "23px 1px",
         backgroundColor: "#FFFFFF",
-        borderWidth: '1px',
         borderWidth: '0px 0px 1px 0px',
 
       },

@@ -1,64 +1,45 @@
 import React, { Component } from 'react'
-/*
-import reducer from './reducers/index'
-import { Provider } from 'react-redux'
-import { createStore } from 'redux'
 import { connect } from 'react-redux'
-import Navbar from './components/Navbar'
-import Article from './components/Article'
-import Container from './components/Container'
-import WordDetail from './components/WordDetail'
-import Account from './components/Account'
-*/
 import Landing from './components/Landing/Landing'
+import ReadableApp from './components/ReadableApp/ReadableApp'
 
-var styles = {
-    div: {
-      fontFamily: 'Raleway sans-serif',
-    },
-}
-
-/*
 class App extends Component {
+  constructor(props) {
+    super(props)
+    this.state = {loggedIn: false, entryPoint: null}
+    this.handleRegistrationSuccessful = this.handleRegistrationSuccessful.bind(this)
+    this.handleLoginSuccessful = this.handleLoginSuccessful.bind(this)
+  }
+
+  handleRegistrationSuccessful() {
+    this.setState({...this.state, entryPoint: ReadableApp.REGISTRATION_ENTRY})
+  }
+
+  handleLoginSuccessful() {
+    this.setState({...this.state, entryPoint: ReadableApp.LOGIN_ENTRY})
+  }
+
+
   render() {
-    var displayed = null
-    if (this.props.displayed === 'article') {
-      displayed =  <Article />
-    } else if (this.props.displayed === 'account'){
-      displayed = <Account />
+    if (this.state.entryPoint !== null) {
+      return (
+        <ReadableApp entryPoint={this.state.entryPoint}/>
+      )
     } else {
-      displayed = null
+      return (
+        <Landing
+          handleRegistrationSuccessful={this.handleRegistrationSuccessful}
+          handleLoginSuccessful={this.handleLoginSuccessful}
+        />
+      )
     }
-
-    console.log(displayed)
-
-    return (
-        <div className="MyApp" style={styles.div}>
-          <Navbar />
-          <Container>
-            {displayed}
-          </Container>
-          <WordDetail />
-        </div>
-    );
   }
 }
 
 const mapStateToProps = (state) => {
   return {
-    displayed: state.articles.displayed,
+    loggedIn: state.user.username !== null && state.user.token !== null,
   }
 }
 
 export default connect(mapStateToProps, null)(App);
-*/
-
-class App extends Component {
-  render() {
-    return (
-      <Landing />
-    )
-  }
-}
-
-export default App;

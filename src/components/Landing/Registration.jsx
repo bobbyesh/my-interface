@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { URL } from '../../Client'
 import axios from '../../Client'
 import validator from 'validator'
 import UsernameInputGroup from './UsernameInputGroup'
 import EmailInputGroup from './EmailInputGroup'
 import PasswordInputGroup from './PasswordInputGroup'
+import { storeUsername, storePassword, storeToken } from '../../actions/user'
 
 var styles = {
   inputGroup: {
@@ -29,7 +31,7 @@ var isValidUsername = function(username) {
   for (var i=0; i< username.length; i++) {
     var ch = username[i]
     var isSpecial = specialChars.indexOf(username.substr(i, 1)) !== -1
-    if (!(isSpecial || validator.isAlpha(ch))) {
+    if (!(isSpecial || validator.isAlphanumeric(ch))) {
       return false
     }
   }
@@ -64,12 +66,8 @@ class Registration extends Component {
       emailIsValid: emailIsValid,
       usernameIsValid: usernameIsValid,
     })
+
     if (passwordsMatch && emailIsValid && usernameIsValid) {
-      var data = {
-        username: this.state.username,
-        email: this.state.email,
-        password: this.state.password1,
-      }
       axios.post(URL + '/api/auth/register/', {
           username: this.state.username,
           email: this.state.email,
@@ -77,6 +75,20 @@ class Registration extends Component {
         }).then(response => {
           console.log(response)
           console.log(response.data)
+          // if 202
+          if (response.status === 201) {
+            //    get token
+            axios.post(URL + '/api/auth/login/', {
+              username: this.state.username,
+              password: this.state.password1,
+            }).then(response => {
+              var token = response.data.auth_token
+              this.props.dispatchUserName(this.state.username)
+              this.props.dispatchPassword(this.state.password1)
+              this.props.dispatchToken(token)
+              this.props.handleRegistrationSuccessful()
+            }).catch(response => console.log(response))
+          }
         }).catch(error => {
           if ('username' in error.response.data){
             this.setState({...this.state, 'usernameErrorMsg': error.response.data.username[0]})
@@ -86,10 +98,8 @@ class Registration extends Component {
   }
 
   render() {
-    console.log(this.state)
-
     var isBordered = this.state.password2 !== '' && (this.state.password1 !== this.state.password2)
-    var confirmationStyle = null
+    var confirmationStyle = {}
     if (isBordered){
       confirmationStyle = {
         ...styles.inputGroup,
@@ -179,4 +189,12 @@ class Registration extends Component {
   }
 }
 
-export default Registration
+const mapDispatchToProps = (dispatch) => {
+  return {
+    dispatchUserName: username => dispatch(storeUsername(username)),
+    dispatchPassword: password => dispatch(storePassword(password)),
+    dispatchToken: token => dispatch(storeToken(token)),
+  }
+}
+
+export default connect(null, mapDispatchToProps)(Registration)

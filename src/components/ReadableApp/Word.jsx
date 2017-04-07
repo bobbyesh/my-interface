@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux'
-import { selectWord } from '../actions/words'
+import { selectWord } from '../../actions/words'
 var Radium = require('radium')
 
 var styles = {

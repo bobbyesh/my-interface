@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Definitions from './Definitions'
 import { connect } from 'react-redux'
-import { selectWord } from '../actions/words'
+import { selectWord } from '../../actions/words'
 
 
 class WordDetail extends Component {

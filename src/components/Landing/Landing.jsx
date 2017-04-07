@@ -8,41 +8,56 @@ import MiniHeader from './MiniHeader'
 import Contact from './Contact'
 import Signin from './Signin'
 import Registration from './Registration'
+import RegistrationSuccessful from './RegistrationSuccessful'
 
 class Landing extends Component {
+
+  static ABOUT = 'ABOUT'
+  static HOME = 'HOME'
+  static CONTACT = 'CONTACT'
+  static SIGNIN = 'SIGNIN'
+  static REGISTRATION = 'REGISTRATION'
+  static REGISTRATION_SUCCESSFUL = 'REGISTRATION_SUCCESSFUL'
+
   constructor(props) {
     super(props)
-    this.state = {displayed: 'home'}
+    this.state = {displayed: Landing.HOME}
     this.handleAboutClick = this.handleAboutClick.bind(this)
     this.handleHomeClick = this.handleHomeClick.bind(this)
     this.handleContactClick = this.handleContactClick.bind(this)
     this.handleSigninClick = this.handleSigninClick.bind(this)
     this.handleRegistrationClick = this.handleRegistrationClick.bind(this)
+    this.handleRegistrationSuccessful = this.handleRegistrationSuccessful.bind(this)
+
   }
 
   handleAboutClick() {
-    this.setState({displayed: 'about'})
+    this.setState({displayed: Landing.ABOUT})
   }
 
   handleHomeClick() {
-    this.setState({displayed: 'home'})
+    this.setState({displayed: Landing.HOME})
   }
 
   handleContactClick() {
-    this.setState({displayed: 'contact'})
+    this.setState({displayed: Landing.CONTACT})
   }
 
   handleSigninClick(e) {
-    this.setState({displayed: 'signin'})
+    this.setState({displayed: Landing.SIGNIN})
   }
 
   handleRegistrationClick(e) {
     e.preventDefault()
-    this.setState({displayed: 'registration'})
+    this.setState({displayed: Landing.REGISTRATION})
+  }
+
+  handleRegistrationSuccessful() {
+    this.setState({displayed: Landing.REGISTRATION_SUCCESSFUL})
+    window.setTimeout(this.props.handleRegistrationSuccessful, 2000)
   }
 
   render() {
-    let wrap = (displayed) => (<div><Navbar2 />{displayed}</div>)
     let navbar = <Navbar2
       handleAboutClick={this.handleAboutClick}
       handleHomeClick={this.handleHomeClick}
@@ -51,7 +66,7 @@ class Landing extends Component {
       displayed={this.state.displayed}
     />
 
-    if (this.state.displayed === 'home') {
+    if (this.state.displayed === Landing.HOME) {
       return (
         <div>
           {navbar}
@@ -60,7 +75,7 @@ class Landing extends Component {
           <Footer />
         </div>
       )
-    } else if (this.state.displayed === 'about') {
+    } else if (this.state.displayed === Landing.ABOUT) {
       return (
         <div>
           <MiniHeader />
@@ -69,7 +84,7 @@ class Landing extends Component {
           <Footer />
         </div>
       )
-    } else if (this.state.displayed === 'contact') {
+    } else if (this.state.displayed === Landing.CONTACT) {
       return (
         <div>
           <MiniHeader />
@@ -78,7 +93,7 @@ class Landing extends Component {
           <Footer />
         </div>
       )
-    }  else if (this.state.displayed === 'signin') {
+    }  else if (this.state.displayed === Landing.SIGNIN) {
       return (
         <div>
           <MiniHeader />
@@ -87,12 +102,24 @@ class Landing extends Component {
           <Footer />
         </div>
       )
-    } else if (this.state.displayed === 'registration') {
+    } else if (this.state.displayed === Landing.REGISTRATION) {
       return (
         <div>
           <MiniHeader />
           {navbar}
-          <Registration handleSigninClick={this.handleSigninClick}/>
+          <Registration
+            handleSigninClick={this.handleSigninClick}
+            handleRegistrationSuccessful={this.handleRegistrationSuccessful}
+          />
+          <Footer />
+        </div>
+      )
+    } else if (this.state.displayed === Landing.REGISTRATION_SUCCESSFUL) {
+      return (
+        <div>
+          <MiniHeader />
+          {navbar}
+          <RegistrationSuccessful />
           <Footer />
         </div>
       )

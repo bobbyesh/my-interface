@@ -107,7 +107,6 @@ class Navbar2 extends Component {
 	}
 
 	renderMobileDropDown() {
-		console.log(this.props)
 		var pullDirection = this.state.windowWidth > 480 ? 'pull-right' : 'pull-left'
 		var homeStyle = this.props.displayed === 'home' ? styles.active : {}
 		var aboutStyle = this.props.displayed === 'about' ? styles.active : {}
