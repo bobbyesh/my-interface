@@ -75,8 +75,6 @@ class Navbar extends Component {
       transition: 'opacity 0.5s',
     }
 
-    console.log(navbarStyle)
-
     return (
       <div className="container">
         <div className="row">
@@ -90,12 +88,12 @@ class Navbar extends Component {
                   <ul
                     className="list-inline"
                     style={styles.ulStyle}
-                    onClick={this.props.dispatchDisplayAccount}
                   >
                     <li
                       key={0}
                       className="fa fa-user navbar-link"
                       style={styles.liStyle}
+                      onClick={this.props.dispatchDisplayAccount}
                     >
                       <span key={2} style={styles.liStyle}> Account</span>
                     </li>

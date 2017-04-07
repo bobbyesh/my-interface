@@ -3,18 +3,11 @@ import { FormGroup, HelpBlock, FormControl, ControlLabel } from 'react-bootstrap
 import { connect } from 'react-redux'
 import { loadTitle, loadParagraphs, hideImportModal, displayArticle } from '../../actions/articles'
 var Radium = require('radium')
-import { URL } from '../../Client'
+import client from '../../Client'
 
 // Wrap Button so that the style attribute is passed down correctly
 var Button = require('react-bootstrap').Button
 Button = Radium(Button)
-
-var axios = require('axios')
-var Cookies = require('js-cookie')
-
-var csrftoken = Cookies.get('csrftoken')
-axios.defaults.xsrfHeaderName = "X-CSRFToken";
-axios.defaults.headers.common["X-CSRFToken"] = csrftoken;
 
 var styles = {
   btnStyle:  {
@@ -52,8 +45,7 @@ class ImportForm extends Component {
           return;
     }
 
-    var url = URL + 'article'
-    axios.post(url, {
+    client.post('/api/article/', {
             title: this.state.title,
             text: this.state.text,
           })
@@ -62,7 +54,7 @@ class ImportForm extends Component {
               this.props.dispatchTitle(response.data.title)
               this.props.dispatchDisplayArticle()
               this.props.hideImportModal()
-          })
+          }).catch(response => console.log(response))
   }
 
   isValid() {

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 
 class Account extends Component {
   render() {
@@ -31,7 +32,7 @@ class Account extends Component {
                 User Name
           </div>
           <div className="col-md-4 text-left" style={styles.column}>
-                John Doe
+                {this.props.username}
           </div>
           <div className="col-md-3 text-left" style={styles.column}>
             <a href="#">Change Username</a>
@@ -42,7 +43,7 @@ class Account extends Component {
                 Email
           </div>
           <div className="col-md-4 text-left" style={styles.column}>
-                johndoe@gmail.com
+                {this.props.email}
           </div>
           <div className="col-md-3 text-left" style={styles.column}>
             <a href="#">Change Email</a>
@@ -69,4 +70,8 @@ class Account extends Component {
   }
 }
 
-export default Account
+const mapStateToProps = (state) => {
+  return {username: state.user.username, email: state.user.email}
+}
+
+export default connect(mapStateToProps, null)(Account)

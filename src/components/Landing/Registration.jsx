@@ -1,12 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { URL } from '../../Client'
-import axios from '../../Client'
+import client from '../../Client'
 import validator from 'validator'
 import UsernameInputGroup from './UsernameInputGroup'
 import EmailInputGroup from './EmailInputGroup'
 import PasswordInputGroup from './PasswordInputGroup'
-import { storeUsername, storePassword, storeToken } from '../../actions/user'
+import { storeUsername, storeToken } from '../../actions/user'
 
 var styles = {
   inputGroup: {
@@ -68,7 +67,7 @@ class Registration extends Component {
     })
 
     if (passwordsMatch && emailIsValid && usernameIsValid) {
-      axios.post(URL + '/api/auth/register/', {
+      client.post('/api/auth/register/', {
           username: this.state.username,
           email: this.state.email,
           password: this.state.password1,
@@ -78,15 +77,15 @@ class Registration extends Component {
           // if 202
           if (response.status === 201) {
             //    get token
-            axios.post(URL + '/api/auth/login/', {
+            client.post('/api/auth/login/', {
               username: this.state.username,
               password: this.state.password1,
             }).then(response => {
               var token = response.data.auth_token
-              this.props.dispatchUserName(this.state.username)
-              this.props.dispatchPassword(this.state.password1)
-              this.props.dispatchToken(token)
-              this.props.handleRegistrationSuccessful()
+              window.setTimeout(this.props.dispatchUserName(this.state.username), 3000)
+              window.setTimeout(this.props.dispatchToken(token), 3000)
+              window.setTimeout(this.props.handleRegistrationSuccessful, 3000)
+              this.props.switchToRegistrationSuccessfulScreen()
             }).catch(response => console.log(response))
           }
         }).catch(error => {
@@ -192,7 +191,6 @@ class Registration extends Component {
 const mapDispatchToProps = (dispatch) => {
   return {
     dispatchUserName: username => dispatch(storeUsername(username)),
-    dispatchPassword: password => dispatch(storePassword(password)),
     dispatchToken: token => dispatch(storeToken(token)),
   }
 }

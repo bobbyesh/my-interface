@@ -1,13 +1,13 @@
 export const STORE_USERNAME = 'STORE_USERNAME'
-export const STORE_PASSWORD = 'STORE_PASSWORD'
+export const STORE_EMAIL = 'STORE_EMAIL'
 export const STORE_TOKEN = 'STORE_TOKEN'
 
 export function storeUsername(username) {
   return {type: STORE_USERNAME, username: username}
 }
 
-export function storePassword(password) {
-  return {type: STORE_PASSWORD, password: password}
+export function storeEmail(email) {
+  return {type: STORE_EMAIL, email: email}
 }
 
 export function storeToken(token) {

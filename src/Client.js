@@ -1,10 +1,12 @@
-export const URL = 'http://127.0.0.1:8000'
-
 var axios = require('axios')
 var Cookies = require('js-cookie')
 
 var csrftoken = Cookies.get('csrftoken')
-axios.defaults.xsrfHeaderName = "X-CSRFToken";
-axios.defaults.headers.common["X-CSRFToken"] = csrftoken;
+var instance = axios.create({
+  baseURL: 'http://127.0.0.1:8000',
+})
 
-export default axios
+instance.defaults.xsrfHeaderName = "X-CSRFToken";
+instance.defaults.headers.common["X-CSRFToken"] = csrftoken;
+
+export default instance

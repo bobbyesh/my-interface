@@ -6,24 +6,18 @@ import ReadableApp from './components/ReadableApp/ReadableApp'
 class App extends Component {
   constructor(props) {
     super(props)
-    this.state = {loggedIn: false, entryPoint: null}
+    this.state = {entryPoint: false}
     this.handleRegistrationSuccessful = this.handleRegistrationSuccessful.bind(this)
-    this.handleLoginSuccessful = this.handleLoginSuccessful.bind(this)
   }
 
   handleRegistrationSuccessful() {
-    this.setState({...this.state, entryPoint: ReadableApp.REGISTRATION_ENTRY})
+    this.setState({...this.state, loggedIn: true})
   }
-
-  handleLoginSuccessful() {
-    this.setState({...this.state, entryPoint: ReadableApp.LOGIN_ENTRY})
-  }
-
 
   render() {
-    if (this.state.entryPoint !== null) {
+    if (this.props.token !== null) {
       return (
-        <ReadableApp entryPoint={this.state.entryPoint}/>
+        <ReadableApp />
       )
     } else {
       return (
@@ -38,7 +32,7 @@ class App extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    loggedIn: state.user.username !== null && state.user.token !== null,
+    token: state.user.token,
   }
 }
 

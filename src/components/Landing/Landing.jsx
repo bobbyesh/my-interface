@@ -11,7 +11,6 @@ import Registration from './Registration'
 import RegistrationSuccessful from './RegistrationSuccessful'
 
 class Landing extends Component {
-
   static ABOUT = 'ABOUT'
   static HOME = 'HOME'
   static CONTACT = 'CONTACT'
@@ -27,8 +26,7 @@ class Landing extends Component {
     this.handleContactClick = this.handleContactClick.bind(this)
     this.handleSigninClick = this.handleSigninClick.bind(this)
     this.handleRegistrationClick = this.handleRegistrationClick.bind(this)
-    this.handleRegistrationSuccessful = this.handleRegistrationSuccessful.bind(this)
-
+    this.switchToRegistrationSuccessfulScreen = this.switchToRegistrationSuccessfulScreen.bind(this)
   }
 
   handleAboutClick() {
@@ -52,9 +50,8 @@ class Landing extends Component {
     this.setState({displayed: Landing.REGISTRATION})
   }
 
-  handleRegistrationSuccessful() {
+  switchToRegistrationSuccessfulScreen() {
     this.setState({displayed: Landing.REGISTRATION_SUCCESSFUL})
-    window.setTimeout(this.props.handleRegistrationSuccessful, 2000)
   }
 
   render() {
@@ -109,7 +106,7 @@ class Landing extends Component {
           {navbar}
           <Registration
             handleSigninClick={this.handleSigninClick}
-            handleRegistrationSuccessful={this.handleRegistrationSuccessful}
+            switchToRegistrationSuccessfulScreen={this.switchToRegistrationSuccessfulScreen}
           />
           <Footer />
         </div>
