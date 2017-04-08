@@ -42,7 +42,6 @@ class Navbar2 extends Component {
 		}
 		this.componentDidMount = this.componentDidMount.bind(this)
 		this.componentWillUnmount = this.componentWillUnmount.bind(this)
-		this.renderNavLinks = this.renderNavLinks.bind(this)
 		this.renderMobileDropDown = this.renderMobileDropDown.bind(this)
 		this.handleMobileNavClick = this.handleMobileNavClick.bind(this)
 		this.renderMobileButton = this.renderMobileButton.bind(this)
@@ -76,21 +75,14 @@ class Navbar2 extends Component {
 						<Link className="navbar-brand" style={styles.brand} to="/">Readable</Link>
 					</div>
 					<div>
-							{this.renderNavLinks()}
+						<div>
+						  {this.renderMobileButton()}
+							{this.renderMobileDropDown()}
+						</div>
 					</div>
 				</div>
 			</div>
 		)
-	}
-
-	renderNavLinks() {
-		return (
-				<div>
-				  {this.renderMobileButton()}
-					{this.renderMobileDropDown()}
-				</div>
-			)
-
 	}
 
 	renderMobileButton() {

@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Landing from './components/Landing/Landing'
 import ReadableApp from './components/ReadableApp/ReadableApp'
 
@@ -9,8 +9,8 @@ class App extends Component {
     return (
       <Router>
         <div>
-          <Route path='/app' component={ReadableApp} />
-          <Route path ='' component={Landing} />
+          <Route exact path='/' component={Landing} />
+          <Route exact path='/app' component={ReadableApp} />
         </div>
       </Router>
     )

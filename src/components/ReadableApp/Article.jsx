@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Word from './Word'
 import Paragraph from './Paragraph'
+import WordDetail from './WordDetail'
 
 class Article extends Component {
   render() {
@@ -11,12 +12,15 @@ class Article extends Component {
       })
     let title = this.props.title.map((word, id) => <Word key={id} word={word}/>)
     return (
+      <div>
           <article>
             <header>
               <h3>{title}</h3>
             </header>
             {paragraphComponents}
           </article>
+        <WordDetail />
+      </div>
     )
   }
 }
