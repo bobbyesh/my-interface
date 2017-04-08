@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import validator from 'validator'
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from 'react-router-dom'
 import client from '../../Client'
 import UsernameInputGroup from './UsernameInputGroup'
 import EmailInputGroup from './EmailInputGroup'
@@ -54,6 +54,7 @@ class Registration extends Component {
       emailIsValid: true,
       usernameIsValid: true,
       usernameErrorMsg: '',
+      redirectToSuccess: false,
     }
     this.handleSubmitButton = this.handleSubmitButton.bind(this)
   }
@@ -68,6 +69,7 @@ class Registration extends Component {
       passwordsMatch: passwordsMatch,
       emailIsValid: emailIsValid,
       usernameIsValid: usernameIsValid,
+
     })
 
     if (passwordsMatch && emailIsValid && usernameIsValid) {
@@ -76,20 +78,15 @@ class Registration extends Component {
           email: this.state.email,
           password: this.state.password1,
         }).then(response => {
-          console.log(response)
-          console.log(response.data)
-          // if 202
           if (response.status === 201) {
-            //    get token
             client.post('/api/auth/login/', {
               username: this.state.username,
               password: this.state.password1,
             }).then(response => {
               var token = response.data.auth_token
-              window.setTimeout(this.props.dispatchUserName(this.state.username), 3000)
-              window.setTimeout(this.props.dispatchToken(token), 3000)
-              window.setTimeout(this.props.handleRegistrationSuccessful, 3000)
-              this.props.switchToRegistrationSuccessfulScreen()
+              window.setTimeout(() => this.props.dispatchUserName(this.state.username), 3000)
+              window.setTimeout(() => this.props.dispatchToken(token), 3000)
+              this.setState({...this.state, redirectToSuccess: true})
             }).catch(response => console.log(response))
           }
         }).catch(error => {
@@ -101,6 +98,11 @@ class Registration extends Component {
   }
 
   render() {
+    if(this.state.redirectToSuccess) {
+      return <Redirect to='/register/success/' />
+    }
+
+
     var isBordered = this.state.password2 !== '' && (this.state.password1 !== this.state.password2)
     var confirmationStyle = {}
     if (isBordered){
@@ -199,7 +201,10 @@ class Registration extends Component {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    dispatchUserName: username => dispatch(storeUsername(username)),
+    dispatchUserName: username => {
+      console.log('dispatchedUsername!')
+      dispatch(storeUsername(username))
+    },
     dispatchToken: token => dispatch(storeToken(token)),
   }
 }
